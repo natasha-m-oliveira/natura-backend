@@ -1,5 +1,8 @@
+import { randomUUID } from 'node:crypto';
+
 type CartItemProps = {
   id?: string;
+  cartId: string;
   productId: string;
   quantity: number;
   createdAt?: Date;
@@ -10,7 +13,8 @@ export class CartItem {
 
   constructor(props: CartItemProps) {
     this.props = {
-      id: props.id ?? '',
+      id: props.id ?? randomUUID(),
+      cartId: props.cartId,
       productId: props.productId,
       quantity: props.quantity,
       createdAt: props.createdAt ?? new Date(),
@@ -23,6 +27,14 @@ export class CartItem {
 
   public set id(id: string) {
     this.props.id = id;
+  }
+
+  public get cartId() {
+    return this.props.cartId;
+  }
+
+  public set cartId(cartId: string) {
+    this.props.cartId = cartId;
   }
 
   public get productId() {

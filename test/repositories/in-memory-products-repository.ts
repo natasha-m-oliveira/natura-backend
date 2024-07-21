@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 import { Product } from '@app/entities/product';
 import { ProductsRepository } from '@app/repositories/products-repository';
 import { QueryOptions } from '@app/repositories/types';
@@ -8,10 +6,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
   public readonly products: Product[] = [];
 
   async create(product: Product): Promise<void> {
-    Object.assign(product, {
-      id: randomUUID(),
-    });
-
     this.products.push(product);
   }
 

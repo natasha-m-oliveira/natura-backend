@@ -41,6 +41,7 @@ export class UpdateCartItems {
         if (!product) throw new ProductNotFound();
 
         return new CartItem({
+          cartId: cart.id,
           productId: item.productId,
           quantity: item.quantity,
         });

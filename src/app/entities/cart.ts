@@ -1,6 +1,11 @@
+import { randomUUID } from 'node:crypto';
+
 import { CartItem } from './cart-item';
 
-export type CartStatus = 'pending' | 'ordered';
+export enum CartStatus {
+  pending = 'pending',
+  ordered = 'ordered',
+}
 
 type CartProps = {
   id?: string;
@@ -8,7 +13,7 @@ type CartProps = {
   createdAt?: Date;
   updatedAt?: Date;
 
-  items: CartItem[];
+  items?: CartItem[];
 };
 
 export class Cart {
@@ -16,8 +21,8 @@ export class Cart {
 
   constructor(props: CartProps) {
     this.props = {
-      id: props.id ?? '',
-      status: props.status ?? 'pending',
+      id: props.id ?? randomUUID(),
+      status: props.status ?? CartStatus.pending,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
 

@@ -26,6 +26,10 @@ export class CreateCart {
   ) {}
 
   async execute(props: CreateCartRequest): Promise<CreateCartResponse> {
+    const cart = new Cart({
+      items: [],
+    });
+
     const items = await Promise.all(
       props.items.map(async (item) => {
         const product = await this.productsRepository.findById(item.productId);
@@ -34,14 +38,13 @@ export class CreateCart {
 
         return new CartItem({
           productId: item.productId,
+          cartId: cart.id,
           quantity: item.quantity,
         });
       }),
     );
 
-    const cart = new Cart({
-      items,
-    });
+    cart.items = items;
 
     await this.cartsRepository.create(cart);
 

@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 type ProductProps = {
   id?: string;
   name: string;
@@ -14,7 +16,7 @@ export class Product {
 
   constructor(props: ProductProps) {
     this.props = {
-      id: props.id ?? '',
+      id: props.id ?? randomUUID(),
       name: props.name,
       description: props.description ?? null,
       image: props.image ?? null,

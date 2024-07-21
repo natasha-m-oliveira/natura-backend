@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 import { Cart } from '@app/entities/cart';
 import { CartsRepository } from '@app/repositories/carts-repository';
 
@@ -7,10 +5,6 @@ export class InMemoryCartsRepository extends CartsRepository {
   public readonly carts: Cart[] = [];
 
   async create(cart: Cart): Promise<void> {
-    Object.assign(cart, {
-      id: randomUUID(),
-    });
-
     this.carts.push(cart);
   }
 
