@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prisma:generate": "prisma generate",
     "prisma:dbpush": "prisma db push",
     "prisma:studio": "prisma studio",
     "prisma:seed": "ts-node -r tsconfig-paths/register ./prisma/seeds/index.ts",

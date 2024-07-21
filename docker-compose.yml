@@ -1,0 +1,53 @@
+version: "3.10"
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=abc123
+      - POSTGRES_DB=natura
+      - TZ="America/Sao_Paulo"
+    volumes:
+      - pg-data:/data/postgres
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=docker
+      - MONGO_INITDB_ROOT_PASSWORD=abc123
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    environment:
+      - TZ=America/Sao_Paulo
+      - DB_URL_POSTGRES=postgresql://docker:abc123@postgres:5432/natura
+      - DB_URL_MONGO=mongodb://docker:abc123@mongodb:27017/natura?authSource=admin&retryWrites=true&w=majority&directConnection=true
+    container_name: natura_backend
+    ports:
+      - 3100:3100
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+    links:
+      - postgres
+      - mongodb
+    depends_on:
+      - postgres
+      - mongodb
+
+volumes:
+  pg-data:
+    driver: local
+  mongo-data:
+    driver: local
