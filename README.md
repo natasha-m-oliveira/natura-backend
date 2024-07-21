@@ -1,73 +1,72 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Setup e Execução do Projeto
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este guia fornece instruções para configurar e iniciar o projeto utilizando Docker e Docker Compose.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Pré-requisitos
 
-## Description
+Antes de começar, certifique-se de que você tem o Docker e o Docker Compose instalados. Você pode baixar e instalar o Docker [aqui](https://docs.docker.com/get-docker/) e o Docker Compose [aqui](https://docs.docker.com/compose/install/).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Passo a Passo
 
-## Installation
+### 1. Construir e Iniciar os Contêineres
 
-```bash
-$ npm install
+Para construir e iniciar os contêineres, execute o seguinte comando:
+
+```sh
+sudo docker compose up --build
 ```
 
-## Running the app
+Este comando irá:
+* Construir as imagens do Docker com base no Dockerfile.
+* Iniciar os serviços definidos no docker-compose.yml, incluindo PostgreSQL, MongoDB e o backend da aplicação.
 
-```bash
-# development
-$ npm run start
+### 2. Configurar o Banco de Dados (Apenas na Primeira Execução)
 
-# watch mode
-$ npm run start:dev
+Após o serviço app ser iniciado, você precisará acessar o contêiner do backend para configurar o banco de dados. Isso deve ser feito apenas na primeira execução do serviço. Para isso, siga os passos abaixo:
 
-# production mode
-$ npm run start:prod
+### 2.1 Acessar o Contêiner do Backend
+
+Execute o seguinte comando para acessar o contêiner do backend:
+
+```sh
+sudo docker exec -it natura_backend /bin/sh
 ```
 
-## Test
+### 2.2 Executar Comandos de Configuração
 
-```bash
-# unit tests
-$ npm run test
+Uma vez dentro do contêiner, execute os seguintes comandos para configurar o banco de dados:
 
-# e2e tests
-$ npm run test:e2e
+```sh
+npm run prisma:dbpush
+npm run prisma:seed
+```
+* `npm run prisma:dbpush` irá aplicar as mudanças do esquema Prisma ao banco de dados.
+* `npm run prisma:seed` irá popular o banco de dados com dados iniciais.
 
-# test coverage
-$ npm run test:cov
+### 2.3 Reiniciar o Serviço
+
+Após a configuração inicial, você pode reiniciar o contêiner do backend (se necessário) com:
+
+```sh
+sudo docker restart natura_backend
 ```
 
-## Support
+## Notas Adicionais
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+* **Verificação de Logs**: Para verificar os logs dos contêineres, utilize o comando:
 
-## Stay in touch
+```sh
+sudo docker logs [nome_do_serviço]
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+* Exemplo para verificar os logs do backend:
 
-## License
+```sh
+sudo docker logs natura_backend
+```
 
-Nest is [MIT licensed](LICENSE).
+* **Atualizar as Imagens**: Se você fizer mudanças no Dockerfile ou no docker-compose.yml, lembre-se de reconstruir as imagens com:
+
+```sh
+sudo docker compose up --build
+```
