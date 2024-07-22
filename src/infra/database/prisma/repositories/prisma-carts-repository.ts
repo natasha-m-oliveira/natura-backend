@@ -23,6 +23,13 @@ export class PrismaCartsRepository extends CartsRepository {
       where: {
         id,
       },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
 
     if (!cart) return null;

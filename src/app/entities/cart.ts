@@ -17,7 +17,7 @@ type CartProps = {
 };
 
 export class Cart {
-  private props: Required<CartProps>;
+  private props: Required<Omit<CartProps, 'items'>> & Pick<CartProps, 'items'>;
 
   constructor(props: CartProps) {
     this.props = {

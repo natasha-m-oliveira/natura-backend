@@ -32,7 +32,7 @@ export function createDefaultQuerys(): ApiQueryOptions[] {
         type: 'string',
         nullable: true,
       },
-      example: 'teste',
+      example: 'test',
       required: false,
     },
   ];

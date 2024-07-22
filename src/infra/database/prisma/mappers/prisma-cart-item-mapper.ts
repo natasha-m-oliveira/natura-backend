@@ -1,7 +1,11 @@
 import { CartItem } from '@app/entities/cart-item';
 import { CartItem as PrismaCartItem } from '@prisma/client';
 
-export type RawCartItem = PrismaCartItem;
+import { PrismaProductMapper, RawProduct } from './prisma-product-mapper';
+
+export type RawCartItem = PrismaCartItem & {
+  product?: RawProduct;
+};
 
 export class PrismaCartItemMapper {
   static toPrisma(cartItem: CartItem): PrismaCartItem {
@@ -21,6 +25,9 @@ export class PrismaCartItemMapper {
       productId: cartItem.productId,
       quantity: cartItem.quantity,
       createdAt: cartItem.createdAt,
+
+      product:
+        cartItem.product && PrismaProductMapper.toDomain(cartItem.product),
     });
   }
 }

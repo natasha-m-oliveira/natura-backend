@@ -17,7 +17,7 @@ export class PrismaCartMapper {
       data: this.toPrisma(cart),
     };
 
-    if (cart.items?.length) {
+    if (cart.items) {
       input.data.items = {
         createMany: {
           data: cart.items.map((item) => {
@@ -36,7 +36,7 @@ export class PrismaCartMapper {
       data: this.toPrisma(cart),
     };
 
-    if (cart.items?.length) {
+    if (cart.items) {
       input.data.items = {
         deleteMany: {},
         createMany: {
