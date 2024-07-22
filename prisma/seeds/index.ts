@@ -9,11 +9,14 @@ export async function runSeed() {
   prisma = new PrismaClient();
 
   const products = Array.from({ length: 40 }, () => {
+    const price = Number(faker.commerce.price()) * 100;
+
     return {
       id: randomUUID(),
       name: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
-      price: Number(faker.commerce.price()) * 100,
+      price: price,
+      discount: price > 40000 ? Math.trunc(price * 0.2) : null,
     };
   });
 
