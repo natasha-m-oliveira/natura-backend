@@ -1,5 +1,5 @@
 import { Controller, Delete, HttpCode, Param } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { DeleteCart } from '@app/use-cases/carts/delete-cart';
 import { RecourceIdParam } from '@infra/http/dtos/recource-id-param';
@@ -8,7 +8,6 @@ import { documentation } from './carts-documentation';
 
 @Controller()
 @ApiTags('Carts')
-@ApiBearerAuth()
 export class DeleteCartController {
   constructor(private deleteCart: DeleteCart) {}
 

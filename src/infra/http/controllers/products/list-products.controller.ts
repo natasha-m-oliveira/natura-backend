@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ListProducts } from '@app/use-cases/products/list-products';
 import { ApiDefaultQuerys } from '@infra/http/documentation/decorators/api-default-querys.decorator';
@@ -11,7 +11,6 @@ import { documentation } from './products-documentation';
 
 @Controller()
 @ApiTags('Products')
-@ApiBearerAuth()
 export class ListProductsController {
   constructor(private listProducts: ListProducts) {}
 

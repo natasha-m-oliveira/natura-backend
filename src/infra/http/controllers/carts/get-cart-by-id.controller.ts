@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { GetCartById } from '@app/use-cases/carts/get-cart-by-id';
 import { ApiDefaultQuerys } from '@infra/http/documentation/decorators/api-default-querys.decorator';
@@ -10,7 +10,6 @@ import { documentation } from './carts-documentation';
 
 @Controller()
 @ApiTags('Carts')
-@ApiBearerAuth()
 export class GetCartByIdController {
   constructor(private getCartById: GetCartById) {}
 

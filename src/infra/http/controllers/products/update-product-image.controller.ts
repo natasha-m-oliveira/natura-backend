@@ -9,13 +9,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { File, FileType } from '@app/helpers/file';
 import { UpdateProductImage } from '@app/use-cases/products/update-product-image';
@@ -25,7 +19,6 @@ import { documentation } from './products-documentation';
 
 @Controller()
 @ApiTags('Products')
-@ApiBearerAuth()
 export class UpdateProductImageController {
   constructor(private updateProductImage: UpdateProductImage) {}
 

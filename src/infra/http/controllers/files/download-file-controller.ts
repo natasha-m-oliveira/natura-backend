@@ -1,7 +1,7 @@
 import { Response as Res } from 'express';
 
 import { Controller, Get, Param, Response } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
 import { Folder } from '@app/providers/storage-provider';
 import { DownloadFile } from '@app/use-cases/files/download-file';
@@ -9,7 +9,6 @@ import { FileNameParam } from '@infra/http/dtos/file-name-param';
 
 @Controller()
 @ApiTags('Files')
-@ApiBearerAuth()
 export class DownloadFileController {
   constructor(private downloadFile: DownloadFile) {}
 

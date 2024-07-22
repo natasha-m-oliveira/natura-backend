@@ -1,11 +1,5 @@
 import { Body, Controller, Param, Put, UseInterceptors } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UpdateCartItems } from '@app/use-cases/carts/update-cart-items';
 import { UpdateCartItemsBody } from '@infra/http/dtos/carts/update-cart-items-body';
@@ -16,7 +10,6 @@ import { documentation } from './carts-documentation';
 
 @Controller()
 @ApiTags('Carts')
-@ApiBearerAuth()
 export class UpdateCartItemsController {
   constructor(private updateCartItems: UpdateCartItems) {}
 
